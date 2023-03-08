@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 const CurrencyInput = (props) => {
   return (
     <div className='currency-input'>

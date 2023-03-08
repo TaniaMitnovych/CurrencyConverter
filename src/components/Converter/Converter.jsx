@@ -2,48 +2,38 @@ import React from 'react';
 import './Converter.scss';
 import CurrencyInput from '../CurrencyInput/CurrencyInput';
 import { useState, useEffect } from 'react';
+import { convertCurrency } from '../../api/APIConverter';
 const Converter = (props) => {
   const [currencyFrom, setCurrencyFrom] = useState("USD");
   const [currencyTo, setCurrencyTo] = useState("UAH");
   const [amountTo, setAmountTo] = useState('');
   const [amountFrom, setAmountFrom] = useState('');
-  
 
-  function convert(amount, from, to) {
-    console.log(from)
-    let i = 1;
-    if(from==='USD'){
-      i=5
-    }else if(from==='UER'){
-      i=3
-    }
-    return amount * i;
-  }
   useEffect(() => {
     handleChangeAmountTo(amountTo);
   }, [currencyTo])
   useEffect(() => {
     handleChangeAmountFrom(amountFrom);
   }, [currencyFrom])
-  
 
-  const handleChangeAmountFrom = (amount) => {
-    // if(Number.isNaN(amount)){
-    //   setAmountFrom('');
-    // }else{
-      setAmountFrom(amount);
-    //}
-    let amountTo = convert(amount, currencyFrom, currencyTo);
-    setAmountTo(amountTo);
+
+  async function handleChangeAmountFrom(amount) {
+    setAmountFrom(amount);
+    if(!amount){
+      setAmountTo(0);
+    }else{
+      let amountTo = await convertCurrency({ from: currencyFrom, to: currencyTo, amount: amount})
+      setAmountTo(amountTo);
+    }
   }
-  const handleChangeAmountTo = (amount) => {
-    // if(Number.isNaN(amount)){
-    //   setAmountTo();
-    // }else{
-      setAmountTo(amount);
-    //}
-    let amountFrom = convert(amount, currencyFrom, currencyTo);
-    setAmountFrom(amountFrom);
+  async function handleChangeAmountTo(amount) {
+    setAmountTo(amount);
+    if (!amount) {
+      setAmountFrom(0);
+    } else {
+      let amountFrom = await convertCurrency({ from: currencyTo, to: currencyFrom, amount: amount})
+      setAmountFrom(amountFrom);
+    }
   }
   const handleCurrencyChangingFrom = (currency) => {
     setCurrencyFrom(currency);
