@@ -1,23 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
-
+import './reset.scss';
+import Header from './components/Header/Header';
+import CurrencyInHeader from './data/currencyInHeader.json';
+import CurrencyList from './data/currencyAvailable.json';
+import Converter from './components/Converter/Converter';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header currencies={CurrencyInHeader}/>
+      <Converter currencies={CurrencyList}/>
     </div>
   );
 }
