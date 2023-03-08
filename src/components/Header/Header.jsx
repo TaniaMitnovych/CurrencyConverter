@@ -8,8 +8,8 @@ const Header = (props) => {
         {
           props.currencies.map((currency,i)=>{
             return(
-              <li key={i}>
-                <p>{`${currency.amount} ${currency.from} → ${currency.to}`}</p>
+              <li key={i} className="header__currency-item">
+                <p>{`${currency.from} → ${currency.to}`}</p>
                 <p>{i}</p>
               </li>
             )
