@@ -1,0 +1,12 @@
+[
+  {
+    "from":"USD",
+    "to":"UAH",
+    "amount":1
+  },
+  {
+    "from":"EUR",
+    "to":"UAH",
+    "amount":1
+  }
+]
