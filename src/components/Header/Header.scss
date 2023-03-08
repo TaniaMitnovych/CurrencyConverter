@@ -9,11 +9,11 @@
   align-items: center;
   color: white;
   font-family: 'Golos Text', sans-serif;
-  min-width: 360px;
   &__title {
     font-size: 60px;
     margin:40px 0;
     text-align: center;
+    width:80%;
   }
   &__currency-list{
     display: flex;
@@ -27,6 +27,16 @@
     &>p:first-child{
       margin-bottom:15px;
       font-size: 16px;
+    }
+  }
+}
+@media (max-width:350px){
+  .header{
+    &__title{
+      font-size: 40px;
+    }
+    &__currency-list{
+      flex-direction: column;
     }
   }
 }
