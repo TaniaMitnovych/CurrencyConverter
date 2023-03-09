@@ -3,20 +3,19 @@ import './Header.scss';
 import { convertCurrency } from '../../api/APIConverter';
 import { useState, useEffect } from 'react';
 const Header = (props) => {
-  const [convertionRes, setConvertionRes] = useState([]);
-  
-  async function convert() {
-    props.currencies.map((currency) => {
-      convertCurrency({ from: currency.from, to: currency.to, amount: currency.amount })
-        .then(res => {
-          setConvertionRes(prev=>[...prev,Number(res).toFixed(2)])
-        })
+  const [convertionRes, setConvertionRes] = useState({});
+
+  function convert() {
+    props.currencies.map(async function (currency) {
+      let result = await convertCurrency({ from: currency.from, to: currency.to, amount: currency.amount })
+      console.log(result, convertionRes, currency.from);
+      setConvertionRes(prev => { return { ...prev, [currency.from]: Number(result).toFixed(2) } })
     })
   }
   useEffect(() => {
     convert();
   }, [])
-  
+
   return (
     <header className='header'>
       <h1 className='header__title'>Currency converter</h1>
@@ -26,7 +25,7 @@ const Header = (props) => {
             return (
               <li key={i} className="header__currency-item">
                 <p>{`${currency.from} → ${currency.to}`}</p>
-                <p>{convertionRes[i]}</p>
+                <p>{convertionRes[currency.from]}</p>
               </li>
             )
           })
