@@ -8,7 +8,6 @@ const Header = (props) => {
   function convert() {
     props.currencies.map(async function (currency) {
       let result = await convertCurrency({ from: currency.from, to: currency.to, amount: currency.amount })
-      console.log(result, convertionRes, currency.from);
       setConvertionRes(prev => { return { ...prev, [currency.from]: Number(result).toFixed(2) } })
     })
   }

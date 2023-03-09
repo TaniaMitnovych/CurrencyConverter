@@ -1,8 +1,8 @@
 import apiKey from '../data/accessApiKey.json';
+
 const fetchData = (url) => {
   let newHeaders = new Headers();
   newHeaders.append("apikey", apiKey.key);
-
   const requestOptions = {
     method: 'GET',
     redirect: 'follow',

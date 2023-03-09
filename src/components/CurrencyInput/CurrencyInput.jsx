@@ -8,7 +8,7 @@ const CurrencyInput = (props) => {
           type='number'
           placeholder={0}
           value={props.value}
-          onInput={(e) => { props.onChangeAmount(e.target.value) }} />
+          onChange={(e) => { props.onChangeAmount(e.target.value) }} />
         <select
           value={props.selected}
           onChange={(e) => { props.onSelectCurrency(e.target.value) }}>

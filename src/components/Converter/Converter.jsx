@@ -3,23 +3,27 @@ import './Converter.scss';
 import CurrencyInput from '../CurrencyInput/CurrencyInput';
 import { useState, useEffect } from 'react';
 import { convertCurrency } from '../../api/APIConverter';
+import {throttle} from 'lodash';
+
 const Converter = (props) => {
+  const THROTTLING_DELAY=500;
   const [currencyFrom, setCurrencyFrom] = useState("USD");
   const [currencyTo, setCurrencyTo] = useState("UAH");
   const [amountTo, setAmountTo] = useState('');
   const [amountFrom, setAmountFrom] = useState('');
-
+  const throttledHandlingChangingAmountFrom=throttle(handleChangeAmountFrom, THROTTLING_DELAY);
+  const throttledHandlingChangingAmountTo=throttle(handleChangeAmountTo, THROTTLING_DELAY);
   useEffect(() => {
-    handleChangeAmountTo(amountTo);
+    throttledHandlingChangingAmountTo(amountTo);
   }, [currencyTo])
   useEffect(() => {
-    handleChangeAmountFrom(amountFrom);
+    throttledHandlingChangingAmountFrom(amountFrom);
   }, [currencyFrom])
 
+  
 
   async function handleChangeAmountFrom(amount) {
     setAmountFrom(amount);
-    console.log(!amount)
     if(!amount){
       setAmountTo(0);
     }else{
@@ -29,7 +33,6 @@ const Converter = (props) => {
   }
   async function handleChangeAmountTo(amount) {
     setAmountTo(amount);
-    console.log(!amount)
     if (!amount) {
       setAmountFrom(0);
     } else {
@@ -51,14 +54,14 @@ const Converter = (props) => {
           selected={currencyFrom}
           value={amountFrom}
           onSelectCurrency={handleCurrencyChangingFrom}
-          onChangeAmount={handleChangeAmountFrom}
+          onChangeAmount={(value)=>{setAmountFrom(value);throttledHandlingChangingAmountFrom(value)}}
           label='From' />
         <CurrencyInput
           currencies={props.currencies}
           selected={currencyTo}
           value={amountTo}
           onSelectCurrency={handleCurrencyChangingTo}
-          onChangeAmount={handleChangeAmountTo}
+          onChangeAmount={(value)=>{setAmountTo(value);throttledHandlingChangingAmountTo(value)}}
           label='To' />
       </div>
     </div >
