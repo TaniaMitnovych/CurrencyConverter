@@ -19,6 +19,7 @@ const Converter = (props) => {
 
   async function handleChangeAmountFrom(amount) {
     setAmountFrom(amount);
+    console.log(!amount)
     if(!amount){
       setAmountTo(0);
     }else{
@@ -28,6 +29,7 @@ const Converter = (props) => {
   }
   async function handleChangeAmountTo(amount) {
     setAmountTo(amount);
+    console.log(!amount)
     if (!amount) {
       setAmountFrom(0);
     } else {
